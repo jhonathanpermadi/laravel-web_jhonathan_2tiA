@@ -82,8 +82,9 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <h1 class="display-6 mb-2">{{ $username }} </h1>
-            <p class="lead mb-0">{{ $last_login }} </p>
+            <h1 class="display-6 mb-2">Welcome Aboard!</h1>
+            <h1>{{ $username }}</h1>
+            <p>{{ $last_login }}</p>
         </div>
     </section>
 
