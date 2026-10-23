@@ -154,26 +154,53 @@
             </div>
 
             <div class="col-md-6">
-                <div class="card">
+               <div class="card">
     <div class="card-body">
-       <h5 class="card-title">Form Pertanyaan</h5>
-       <form action="{{ route('question.store') }}" method="POST">
-	   @csrf
+        <h5 class="card-title">Form Pertanyaan</h5>
 
-        <form action="" method="POST">
-            <div class="mb-3">
-                <label for="nama" class="form-label">Nama </label>
-                <input type="text" class="form-control" name="nama">
+       @if (session('question_success'))
+    <div class="alert alert-info" role="alert">
+        Terimakasih
+        <strong>{{ session('question_success.nama') }}</strong>!
+        Pertanyaan ini:
+        <strong>{{ session('question_success.pertanyaan') }}</strong>
+        akan segera direspon melalui email
+        <strong>{{ session('question_success.email') }}</strong>
+    </div>
+@endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                @foreach ($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
             </div>
+        @endif
+
+        <form action="{{ route('question.store') }}" method="POST">
+            @csrf
+
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama</label>
+                <input type="text" id="nama" name="nama"
+                    class="form-control" value="{{ old('nama') }}" required>
+            </div>
+
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" name="email">
+                <input type="email" id="email" name="email"
+                    class="form-control" value="{{ old('email') }}" required>
             </div>
+
             <div class="mb-3">
                 <label for="pertanyaan" class="form-label">Pertanyaan</label>
-                <textarea class="form-control" rows="4" name="pertanyaan"></textarea>
+                <textarea id="pertanyaan" name="pertanyaan"
+                    class="form-control" rows="4" required>{{ old('pertanyaan') }}</textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Kirim Pertanyaan</button>
+
+            <button type="submit" class="btn btn-primary">
+                Kirim Pertanyaan
+            </button>
         </form>
     </div>
 </div>

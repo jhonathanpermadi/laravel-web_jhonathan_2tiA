@@ -26,15 +26,17 @@ class QuestionController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //dd($request->all());
-        
-        $data['nama']  = $request->nama;
-        $data['email']  = $request->email;
-        $data['pertanyaan']  = $request->pertanyaan;
+{
+    $data = $request->validate([
+        'nama' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'pertanyaan' => 'required|string',
+    ]);
 
-        return view('home-question-respon', $data);
-    }
+    session()->flash('question_success', $data);
+
+    return view('home-question-respon', $data);
+}
 
     /**
      * Display the specified resource.
