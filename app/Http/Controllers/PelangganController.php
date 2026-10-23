@@ -13,7 +13,7 @@ class PelangganController extends Controller
     public function index()
     {
         $data['dataPelanggan'] = Pelanggan::all();
-		return view('admin.pelanggan.index',$data);
+        return view('admin.pelanggan.index', $data);
     }
 
     /**
@@ -31,18 +31,16 @@ class PelangganController extends Controller
     {
         //dd($request->all())
 
-		$data['first_name'] = $request->first_name;
-		$data['last_name'] = $request->last_name;
-		$data['birthday'] = $request->birthday;
-		$data['gender'] = $request->gender;
-		$data['email'] = $request->email;
-		$data['phone'] = $request->phone;
+        $data['first_name'] = $request->first_name;
+        $data['last_name'] = $request->last_name;
+        $data['birthday'] = $request->birthday;
+        $data['gender'] = $request->gender;
+        $data['email'] = $request->email;
+        $data['phone'] = $request->phone;
 
-		pelanggan::create($data);
+        pelanggan::create($data);
 
-		return redirect()->route('pelanggan.index')->with('success','Penambahan Data Berhasil!');
-
-
+        return redirect()->route('pelanggan.index')->with('success', 'Penambahan Data Berhasil!');
     }
 
     /**
@@ -58,7 +56,9 @@ class PelangganController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pelanggan = Pelanggan::findOrFail($id);
+
+        return view('admin.pelanggan.edit', compact('pelanggan'));
     }
 
     /**
@@ -66,7 +66,19 @@ class PelangganController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $pelanggan = Pelanggan::findOrFail($id);
+
+        $pelanggan->update([
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+            'birthday'   => $request->birthday,
+            'gender'     => $request->gender,
+            'email'      => $request->email,
+            'phone'      => $request->phone,
+        ]);
+
+        return redirect()->route('pelanggan.index')
+            ->with('success', 'Data pelanggan berhasil diperbarui.');
     }
 
     /**

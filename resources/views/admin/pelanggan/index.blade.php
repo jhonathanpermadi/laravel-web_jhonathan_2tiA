@@ -385,7 +385,12 @@
                                             <td>{{ $item->gender }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->phone }}</td>
-                                            <td>Tombol Edit & Tombol Hapus</td>
+                                            <td>
+                                                <a href="{{ route('pelanggan.edit', $item->pelanggan_id) }}"
+                                                    class="btn btn-warning">
+                                                    Edit
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
