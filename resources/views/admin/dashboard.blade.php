@@ -101,6 +101,16 @@
                         <span class="sidebar-text">Dashboard</span>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->is('mahasiswa*') ? 'active' : '' }}">
+                    <a href="{{ route('mahasiswa.index') }}" class="nav-link">
+                        <span class="sidebar-icon">
+                            <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                            </svg>
+                        </span>
+                        <span class="sidebar-text">Data Mahasiswa</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <span class="nav-link  collapsed  d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#submenu-app">
                         <span>
@@ -376,6 +386,53 @@
 						</svg>
 						Upgrade to Pro
 					</a>
+				</div>
+			</div>
+		<!-- Info Cards Mahasiswa -->
+		<div class="row mb-4">
+			<div class="col-12 col-sm-6 col-xl-4 mb-4 mb-xl-0">
+				<div class="card border-0 shadow">
+					<div class="card-body">
+						<div class="row d-block d-xl-flex align-items-center">
+							<div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+								<div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
+									<svg class="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+										<path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+									</svg>
+								</div>
+							</div>
+							<div class="col-12 col-xl-7 px-xl-0">
+								<div class="d-none d-sm-block">
+									<h2 class="h6 text-gray-400 mb-0">Total Mahasiswa</h2>
+									<h3 class="fw-extrabold mb-2">{{ $jumlahMahasiswa ?? 0 }}</h3>
+								</div>
+								<a href="{{ route('mahasiswa.index') }}" class="btn btn-xs btn-primary d-inline-flex align-items-center">
+									Kelola Mahasiswa
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-xl-4">
+				<div class="card border-0 shadow">
+					<div class="card-body">
+						<div class="row d-block d-xl-flex align-items-center">
+							<div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+								<div class="icon-shape icon-shape-tertiary rounded me-4 me-sm-0">
+									<svg class="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+										<path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a10.993 10.993 0 01-.25 2.149c-.297.89-.796 1.68-1.42 2.304a1 1 0 00-.28 1.057l.5 1.5a1 1 0 00.95.689h10.5a1 1 0 00.95-.689l.5-1.5a1 1 0 00-.28-1.057 6.994 6.994 0 01-1.42-2.304c-.13-.42-.22-.862-.25-2.149l2.644-1.131a1 1 0 000-1.84l-7-3zM10 6a2 2 0 100-4 2 2 0 000 4z"></path>
+									</svg>
+								</div>
+							</div>
+							<div class="col-12 col-xl-7 px-xl-0">
+								<h2 class="h6 text-gray-400 mb-0">Program Studi</h2>
+								<h3 class="fs-6 fw-extrabold mb-1">Teknik Informatika</h3>
+								<span class="badge bg-success font-small">Politeknik Caltex Riau</span>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
