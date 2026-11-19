@@ -1,8 +1,6 @@
-```php
 @extends('layouts.admin.app')
 
 @section('content')
-
     {{-- start main content --}}
 
     <div class="py-4">
@@ -18,7 +16,9 @@
                         </svg>
                     </a>
                 </li>
-                <li class="breadcrumb-item"><a href="#">Pelanggan</a></li>
+                <li class="breadcrumb-item">
+                    <a href="#">Pelanggan</a>
+                </li>
             </ol>
         </nav>
 
@@ -29,15 +29,14 @@
             </div>
 
             <div>
-                <a href="" class="btn btn-success text-white">
-                    <i class="far fa-question-circle me-1"></i>
+                <a href="{{ route('pelanggan.create') }}" class="btn btn-success">
                     Tambah Pelanggan
                 </a>
             </div>
         </div>
     </div>
 
-    @if(session('success'))
+    @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
@@ -47,10 +46,93 @@
         <div class="col-12 mb-4">
             <div class="card border-0 shadow mb-4">
                 <div class="card-body">
+
+                    {{-- Form Filter Gender --}}
+
+                    {{-- Form Filter dan Search --}}
+                    <form action="{{ route('pelanggan.index') }}" method="GET" class="mb-4">
+                        <div class="row align-items-end">
+
+                            {{-- Filter Gender --}}
+                            <div class="col-md-3 mb-3">
+                                <label for="gender" class="form-label">
+                                    Filter Gender
+                                </label>
+
+                                <select name="gender" id="gender" class="form-select">
+                                    <option value="">Semua Gender</option>
+
+                                    <option value="Male" {{ request('gender') == 'Male' ? 'selected' : '' }}>
+                                        Male
+                                    </option>
+
+                                    <option value="Female" {{ request('gender') == 'Female' ? 'selected' : '' }}>
+                                        Female
+                                    </option>
+
+                                    <option value="Other" {{ request('gender') == 'Other' ? 'selected' : '' }}>
+                                        Other
+                                    </option>
+                                </select>
+                            </div>
+
+                            {{-- Search --}}
+
+                            {{-- Search --}}
+                            <div class="col-md-3 mb-3">
+                                <label for="search" class="form-label">
+                                    Search
+                                </label>
+
+                                <div class="input-group">
+
+                                    <input type="text" name="search" class="form-control" id="search"
+                                        value="{{ request('search') }}" placeholder="Search" aria-label="Search">
+
+                                    {{-- Tombol Search --}}
+                                    <button type="submit" class="input-group-text" aria-label="Cari pelanggan">
+                                        <svg class="icon icon-xxs" fill="currentColor" viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                                clip-rule="evenodd">
+                                            </path>
+                                        </svg>
+                                    </button>
+
+                                    {{-- Tombol Clear Search --}}
+                                    @if (request('search'))
+                                        <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}"
+                                            class="input-group-text text-danger" title="Hapus pencarian"
+                                            aria-label="Hapus pencarian">
+                                            <span aria-hidden="true">&times;</span>
+                                        </a>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                            {{-- Tombol Filter dan Reset --}}
+                            <div class="col-md-3 mb-3">
+                                <button type="submit" class="btn btn-primary">
+                                    Filter
+                                </button>
+
+                                <a href="{{ route('pelanggan.index') }}" class="btn btn-secondary">
+                                    Reset
+                                </a>
+                            </div>
+
+                        </div>
+                    </form>
+
+
+                    {{-- Tabel Data Pelanggan --}}
                     <div class="table-responsive">
                         <table id="table-pelanggan" class="table table-centered table-nowrap mb-0 rounded">
                             <thead class="thead-light">
                                 <tr>
+                                    <th class="border-0">No</th>
                                     <th class="border-0">First Name</th>
                                     <th class="border-0">Last Name</th>
                                     <th class="border-0">Birthday</th>
@@ -62,8 +144,12 @@
                             </thead>
 
                             <tbody>
-                                @foreach ($dataPelanggan as $item)
+                                @forelse ($dataPelanggan as $item)
                                     <tr>
+                                        <td>
+                                            {{ ($dataPelanggan->currentPage() - 1) * $dataPelanggan->perPage() + $loop->iteration }}
+                                        </td>
+
                                         <td>{{ $item->first_name }}</td>
                                         <td>{{ $item->last_name }}</td>
                                         <td>{{ $item->birthday }}</td>
@@ -88,16 +174,26 @@
                                             </form>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="8" class="text-center">
+                                            Tidak ada data pelanggan.
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
+
+                    {{-- Pagination --}}
+                    <div class="mt-3">
+                        {{ $dataPelanggan->links('pagination::bootstrap-5') }}
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
     {{-- end main content --}}
-
 @endsection
-```
